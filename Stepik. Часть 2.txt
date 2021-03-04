@@ -154,6 +154,8 @@ s = 'aTGcc' p = 'cc'
 - s.find('A') -> -1 # строка 'A' не входит в s
 	* проверка вхождения в строку (лучший метод): if 'TG' in s:'...
 - s.replace('c', 'C') -> 'aTGCC' # заменяем все вхождения 'c' на 'C'.
+- s.split() - разбиение строки по разделителю и преобразование строки в список
+- s.strip([chars]) - удаление пробельных символов в начале и в конце строки
 - несколько вызовов методов:
 s.upper().count('gt'.upper()) -> 2
 
@@ -167,3 +169,151 @@ print(dna[-4:])		-> AGCT
 print(dna[1:-1])	-> TTCGGAGC
 print(dna[1:-1:2])	-> TCGG	(символы от 1 до -1 с шагом 2)
 print(dna[::-1])	-> TCGAGGCTTA (символы в обратном порядке)
+
+СПИСКИ:
+students = ['Ivan', 'Masha', 'Sasha']
+for student in students:
+    print('Hello,' "+ student +"!")
+
+Hello, Ivan!                students[0] -> 'Ivan'
+Hello, Masha!               students[1] -> 'Masha'
+Hello, Sasha!               students[2] -> 'Sasha'
+
+Длина списка:
+len(students)
+Результат: 3
+
+students[0] -> 'Ivan'
+students[1] -> 'Masha'
+students[2] -> 'Sasha'
+students[:2] -> 'Ivan', 'Masha'
+
+students[-3] -> 'Ivan'
+students[-2] -> 'Masha'
+students[-1] -> 'Sasha'
+students[::-1] -> 'Sasha', 'Masha', 'Ivan'
+
+ОПЕРАЦИИ СО СПИСКАМИ (СЛОЖЕНИЕ И УМНОЖЕНИЕ)
+1) Операция сложения (+)
+students = ['Ivan', 'Masha', 'Sasha']
+teachers = ['Oleg', 'Alex']
+students + teachers -> ['Ivan', 'Masha', 'Sasha', 'Oleg', 'Alex']
+2) Операция умножения (*):
+[0, 1] * 4
+Результат: [0, 1, 0, 1, 0, 1, 0, 1]
+
+ИЗМЕНЕНИЕ СПИСКОВ:
+В отличие от изученных типов данны (int, float, str) списки (list) являются изменяемыми. Можно изменить конкретный
+элемент списка:
+students = ['Ivan', 'Masha', 'Sasha']
+students[1] = 'Oleg'
+print(students)
+Результат: ['Ivan', 'Oleg', 'Sasha']
+
+ДОБАВЛЕНИЕ ЭЛЕМЕНТОВ СПИСКА:
+students = ['Ivan', 'Masha', 'Sasha']
+students.append('Olga')
+Результат: students = ['Ivan', 'Masha', 'Sasha', 'Olga']
+students += ['Olga']
+Результат: students = ['Ivan', 'Masha', 'Sasha', 'Olga', 'Olga']
+students += ['Boris', 'Sergey']
+Результат: students = ['Ivan', 'Masha', 'Sasha', 'Olga', 'Olga', 'Boris', 'Sergey']
+Пустой список: students = []
+
+ВСТАВКА ЭЛЕМЕНТОВ В СПИСОК:
+students = ['Ivan', 'Masha', 'Sasha']
+students.insert(1, 'Olga')
+Результат:
+students = ['Ivan', 'Olga', 'Masha', 'Sasha']
+
+УДАЛЕНИЕ ЭЛЕМЕНТОВ ИЗ СПИСКА:
+Вариант 1:
+students = ['Ivan', 'Masha', 'Sasha']
+students.remove('Sasha')
+Результат: students = ['Ivan', 'Masha']
+Вариант 2:
+students = ['Ivan', 'Masha', 'Sasha']
+del students[0]
+Результат: students = ['Masha', 'Sasha']
+
+ПОИСК ЭЛЕМЕНТА В СПИСКЕ
+students = ['Ivan', 'Masha', 'Sasha']
+if 'Ivan' in students:
+    print('Ivan is here!')
+if 'Anna' not in students:
+    print('Anna is out!')
+
+ind = students.index('Sasha')
+Результат: 2
+ind = students.index('Ann')
+Результат: ValueError: 'Ann' is not in list
+
+СОРТИРОВКА СПИСКА
+1) Не изменяя порядка изначального списка:
+students = ['Sasha', 'Ivan', 'Masha']
+ordered_students = sorted(students)
+Результат: ['Ivan', 'Masha', 'Sasha']
+2) Изменяя сам список:
+students.sort()
+Результат: ['Ivan', 'Masha', 'Sasha']
+3) Вывод максимального и минимального значений списка:
+students = ['Sasha', 'Ivan', 'Masha']
+print(min(students))
+print(max(students))
+Результат:
+Ivan
+Sasha
+
+СПИСОК В ОБРАТНОМ ПОРЯДКЕ:
+1) С изменением списка:
+students = ['Sasha', 'Ivan', 'Masha']
+students.reverse()
+print(students)
+Результат: ['Masha', 'Ivan', 'Sasha']
+2) Без изменения списка:
+reversed(students)
+3) Слайсинг (без изменения списка):
+students = ['Sasha', 'Ivan', 'Masha']
+print(students[::-1])
+
+ПРИСВОЕНИЕ СПИСКОВ:
+a = [1, 'A', 2]
+b = a
+a[0] = 42
+Значение a: [42, 'A', 2]
+Значение b: [42, 'A', 2]
+b[2] = 30
+Значение b: [42, 'A', 30]
+Значение a: [42, 'A', 30]
+
+ГЕНЕРАЦИЯ СПИСКОВ:
+a = [0] * 5
+[0, 0, 0, 0, 0]
+
+a = [0 for i in range(5)]
+[0, 0, 0, 0, 0]
+
+a = [i*i for i in range(5)]
+[0, 1, 4, 9, 16]
+
+a = [int(i) for i in input().split()]
+Вводим числа в одну строчку через пробел, например 1 2 3 4
+[1, 2, 3, 4]
+
+ДВУМЕРНЫЕ СПИСКИ:
+a = [[1, 2, 3], [4, 5, 6], [7, 8 9])
+a[1]:
+[4, 5, 6]
+a[1][1]:
+5
+
+Генерация двумерны списков (массивов):
+n = 3
+a = [[0] * n] * n
+a[0][0] = 5
+a = ?
+Ответ: [[5, 0, 0], [5, 0, 0], [5, 0, 0]], потому что мы создавали через ссылку.
+
+Правильная генерация списков:
+a = [[0] * n for i in range(n)]
+a = [[0 for j in range(n)] for i in range(n)]

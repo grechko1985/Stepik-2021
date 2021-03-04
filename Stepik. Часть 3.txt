@@ -1,0 +1,208 @@
+ФУНКЦИИ. СЛОВАРИ. ИНТЕРПРЕТАТОР. ФАЙЛЫ. МОДУЛИ.
+
+3.1. Функции
+Функции используются для:
+- разбиения программы на логические данные;
+- сокрытие детализации реализации;
+- переиспользование кода;
+- создание новых "примитивов".
+
+Объявление функции:
+def min2(a, b):             def имя_функции(аргументы, парметры)
+    if a<= b:               тело функции
+        return a
+    else:
+        return b
+
+Вызов функции:
+# минимум из чисел 42, 30
+m = min2(42, 30)
+# минимум из чисел 42, 30, 25
+m = min2(min2(42, 30), 25)
+Функция должна быть объявлена ранее первого вызова
+
+Различные функции
+1) Без возвращаемого значения.             return _
+2) Без параметров.                         def funct()
+3) Произвольное число параметров.          print(a, b, c, ...)
+4) Параметры со значениями по умоланию.
+
+Произвольное число параметров
+def min(*a):
+    m = a[0]
+    for x in a:
+        if m > x:
+        m = x
+    return m
+
+Значение параметров по умолчанию
+def my_range(start, stop, step=1):
+    res=[]
+    if step > 0:
+        x = start
+        while x < stop:
+        res +=[x]
+        x += step
+    elif step < 0:
+        x = start
+        while x > stop:
+        res += [x]
+        x += step
+    return res
+
+Примеры:
+print(my_range(2, 5))
+[2, 3, 4]
+print(my_range(2, 15, 3))
+[2, 5, 8, 11, 14]
+print(my_range(15, 2, -3))
+[15, 12, 9, 6, 3]
+
+Локальные переменнные - это переменные, которы объявлены внутри функции.
+def init_values():
+    a = 100
+    b = 200
+init_values()
+print(a + b)  # Ошибка, переменные a и b не объявлены.
+
+Изменение локальных переменных:
+def init_values():
+    a = 100
+a = 0
+init_values()
+print(a)    # Результат 0
+
+def init_values(a):
+    a = 100
+b = 0
+init_values()
+print(b)    # Результат 0
+
+Изменение объектов, связанны с локальными переменными
+Пример 1:
+def append_zero(xs):
+    xs.append(0)
+a = []
+append_zero(a)
+print(a)  # Результат 0
+Пример 2:
+def append_zero(xs):
+    xs.append(0)
+    xs = [100]
+a = []
+append_zero(a)
+print(a)  # Результат 0
+
+Глольные переменные - переменные, обявялены вне функции. Такие переменные можно использовать во всей программе.
+Пример 1:
+def print_value():
+    print(a)
+a = 5
+print_value()   # Результат 5
+
+Пример 2:
+def print_value():
+    print(a)
+    a = 10
+    print(a)
+
+a = 5
+print_value()   # UnboundLocalError: local variable 'a' referenced before assignment
+
+3.2. Словари
+3.2.1. Множества
+s = set()               # создание пустого множества
+basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
+print(basket)           # {'orange', 'banana', 'pear', 'apple'}
+'orange' in basket      # True
+'python' in basket      # False
+
+Операции с множествами
+s.add(element)          # добавление элементов в множество
+s.remove(element)       # удаление элементов из множества
+s.discard(element)      # удаление элементов из множества без вывода ошибки, если такого элемента нет в множестве
+s.clear()               # удаление всех элементов из множества
+len(s)                  # число элементов в множестве
+
+Перебор элементов множества:
+basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
+for x in basket:
+    print(x)
+Результат:
+banana
+apple
+orange
+pear
+
+3.2.2. Словари
+Словарь (dictionary), отображение(map), ассоциативный массив. Позволяет хранить пары <ключ, значение>.
+dict()      - создание пустого словаря
+dict, {}    - создание пустого словаря
+d = {'a': 239, 10: 100}     - создание словаря со значениями
+print(d['a'])
+print(d[10])
+
+Операции со словарями:
+dictionary = {...}
+key in dictionary       # False
+key not in dictionary   # True
+dictionary[key] = value - задание значения определённому ключу
+dictionary[key] - получение значения по ключу. Если нет, то будет ошибка.
+dictionary.get(key)   - вернёт None, если ключа нет или значение ключа, если он существует
+del dictionary[key]   - удаление пары ключ/значение из словаря
+str(dictionary) - преобразование словаря в строку.
+
+Словари:
+- изменяемы:
+d['A000AA78'] -> ['Иванов', 'Петров']
+- элементы не имеют порядка
+- все ключи словаря различные
+- ключи неизменяемы (числа, строки, но не могут быть списки или другие словари)
+
+Перебор элементов словаря:
+d = {'C': 14, 'A': 12, 'T': 9, 'G': 18}
+for key in d:
+    print(key, end='')              # G C A T
+for key in d.keys():
+    print(key, end='')              # G C A T
+for value in d.values():
+    print(value, end='')            # 12 14 18 9
+for key, value in d.items():
+    print(key, value, end=';')      # G 18; C 14; A 12; T9;
+
+3.4. Файловый ввод/вывод
+Подключение файла к программе ('r' - открытие файла на чтение):
+inf = open('file.txt', 'r')     # open('file.txt')
+s1 = inf.readline()             # построчное чтение файла - строка 1
+s2 = inf.readline()             # построчное чтение файла - строка 2
+inf.close()                     # закрытие файла
+
+Конструкция для работы с файлом и его автозакрытие
+with open('text.txt') as inf:
+    s1 = inf.readline()
+    s2 = inf.readline()
+# здесь файл уже закрыт
+
+Полезные функции:
+1) Удаление всех служебных символов при чтении из строки (избавление от всех символов стоящих в начале и конце строки):
+s = inf.readline().strip()
+'\t abc \n'.strip() -> 'abc'
+2) Функция позволяющая склеить все части в путь:
+os.path.join('.', 'dirname', 'filename.txt') -> './dirname/filename.txt'
+Чтобы восльзоваться функцие, надо ее вызвать через import os.path.join
+
+Пример прочтения ВСЕХ  строк из файла:
+with open('input.txt') as inf:
+    for line in inf:
+        line = line.strip()
+        print(line)
+3) Запись в файл - функция write
+ouf = open('file.txt', 'w')
+ouf.write('Some text\n')
+ouf.write(str(25))
+ouf.close()
+
+with open('file.txt', 'w') as out:
+    out.write('Some text\n')
+    out.write(str(25))
+# здесь файл уже закрыт
